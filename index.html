@@ -56,7 +56,6 @@
     .brand{
       display:inline-flex;
       align-items:center;
-      gap:10px;
       text-decoration:none;
       color:inherit;
       cursor:pointer;
@@ -84,15 +83,12 @@
       border-radius:10px;
       text-decoration:none;
       color:var(--ink);
-      background:rgba(255,255,255,.45);
+      background:rgba(255,255,255,.55);
       box-shadow:0 8px 20px var(--shadow);
-      transform:rotate(var(--tilt, -1deg));
-      transition:transform .15s ease, background .15s ease;
       user-select:none;
       font-size:16px;
       white-space:nowrap;
     }
-    .tab:hover{ transform:rotate(var(--tilt, -1deg)) translateY(-1px); background:rgba(255,255,255,.65); }
     .tab[aria-current="page"]{
       background:rgba(255,255,255,.85);
       outline:2px dashed rgba(17,17,17,.25);
@@ -101,8 +97,8 @@
 
     /* ===== Page ===== */
     main{
-      padding-top:calc(var(--navh) + 16px);
-      padding-bottom:120px;
+      padding-top:calc(var(--navh) + 10px);
+      padding-bottom:110px;
       display:grid;
       place-items:center;
     }
@@ -129,23 +125,17 @@
       filter:contrast(1.05);
     }
 
-    /* ===== Cards (created from currentbuilds.txt) ===== */
+    /* ===== Cards (from currentbuilds.txt) ===== */
     .card{
       position:absolute;
-      width:min(220px, 42vw);
+      width:min(220px, 46vw);
       border:2px solid var(--frame);
       border-radius:10px;
       background:rgba(247,245,239,.94);
       box-shadow:0 12px 28px rgba(0,0,0,.12);
       padding:10px;
-      transform:rotate(var(--tilt, -1deg));
       cursor:pointer;
-      transition:transform .15s ease, box-shadow .15s ease;
       backdrop-filter:blur(2px);
-    }
-    .card:hover{
-      transform:rotate(var(--tilt, -1deg)) translateY(-2px);
-      box-shadow:0 18px 40px rgba(0,0,0,.18);
     }
     .card__title{
       font-size:18px;
@@ -160,7 +150,7 @@
     }
     .card__img{
       width:100%;
-      height:96px;
+      height:92px;
       border-radius:8px;
       border:1px solid rgba(17,17,17,.22);
       background:rgba(255,255,255,.55);
@@ -181,7 +171,7 @@
       padding-top:8px;
     }
 
-    /* ===== Bottom toolbar ===== */
+    /* ===== Bottom toolbar only ===== */
     .bottombar{
       margin-top:16px;
       border:2px solid rgba(17,17,17,.55);
@@ -189,10 +179,6 @@
       padding:14px;
       background:rgba(255,255,255,.5);
       box-shadow:0 14px 40px rgba(0,0,0,.08);
-      display:grid;
-      gap:12px;
-    }
-    .bottombar__row{
       display:flex;
       align-items:center;
       justify-content:space-between;
@@ -213,24 +199,13 @@
       border-radius:10px;
       text-decoration:none;
       color:var(--ink);
-      background:rgba(255,255,255,.65);
+      background:rgba(255,255,255,.70);
       box-shadow:0 10px 26px rgba(0,0,0,.10);
-      transform:rotate(var(--tilt, -.6deg));
       user-select:none;
       white-space:nowrap;
     }
-    .btn:hover{ background:rgba(255,255,255,.85); }
 
-    .newsletter{
-      display:flex;
-      align-items:center;
-      gap:10px;
-      flex-wrap:wrap;
-      color:var(--ink-soft);
-      font-size:15px;
-    }
-
-    /* ===== Home selection overlay (shows on page load) ===== */
+    /* ===== Selection overlay (shows on page load) ===== */
     .overlay{
       position:fixed; inset:0;
       z-index:200;
@@ -252,30 +227,38 @@
       border-radius:22px;
       border:2px solid rgba(247,245,239,.35);
       box-shadow:0 30px 90px rgba(0,0,0,.35);
-      overflow:clip;
+      overflow:hidden;
       background:rgba(247,245,239,.10);
     }
 
-    /* Cream space filled by assets/popup.png */
+    /* Cream space that contains the responsive popup art */
     .overlay__image{
       position:absolute;
       inset:14px;
       border-radius:18px;
       border:2px solid rgba(17,17,17,.35);
       background-color:var(--overlay-cream);
-      background-image:url("assets/popup.png");
-      background-size:cover;
-      background-position:center;
-      background-repeat:no-repeat;
-      overflow:clip;
+      overflow:hidden;
+    }
+    .overlay__image picture,
+    .overlay__image img{
+      width:100%;
+      height:100%;
+      display:block;
+    }
+    .overlay__image img{
+      object-fit:cover;
     }
 
-    /* Split hit-areas */
+    /* Split layout + buttons (buttons are separate elements on top of the art) */
     .overlay__split{
       position:absolute; inset:0;
       display:grid;
       grid-template-columns:1fr 1fr;
+      pointer-events:none; /* allow only buttons + backdrop to be clickable */
     }
+    .overlay__side{ position:relative; }
+
     .overlay__divider{
       position:absolute;
       top:10%; bottom:10%;
@@ -286,17 +269,16 @@
       pointer-events:none;
     }
 
-    /* Buttons lower center of each side */
     .overlay__btn{
       position:absolute;
       left:50%;
       bottom:22px;
-      transform:translateX(-50%) rotate(var(--tilt, -.7deg));
+      transform:translateX(-50%);
       width:min(340px, 82%);
       padding:12px 14px;
       border-radius:14px;
       border:2px solid rgba(17,17,17,.78);
-      background:rgba(255,255,255,.72);
+      background:rgba(255,255,255,.78);
       color:var(--ink);
       text-decoration:none;
       display:inline-flex;
@@ -307,18 +289,18 @@
       font-size:18px;
       cursor:pointer;
       user-select:none;
+      pointer-events:auto;
       text-align:center;
     }
-    .overlay__btn:hover{ background:rgba(255,255,255,.88); }
 
-    /* Mobile tuning */
+    /* Mobile */
     @media (max-width: 680px){
-      :root{ --navh: 72px; }
-      .topbar__inner{ width:calc(100% - 20px); }
-      .card{ width:min(200px, 64vw); }
-      .card__img{ height:92px; }
+      :root{ --navh:72px; }
 
+      .topbar__inner{ width:calc(100% - 20px); }
+      .card{ width:min(200px, 70vw); }
       .overlay__panel{ height:min(620px, calc(100% - 120px)); }
+
       .overlay__split{ grid-template-columns:1fr; grid-template-rows:1fr 1fr; }
       .overlay__divider{
         left:10%; right:10%;
@@ -334,16 +316,14 @@
 <body>
   <header class="topbar" role="banner">
     <div class="topbar__inner">
-      <!-- Logo only; clicking opens the selection popup -->
+      <!-- Logo only; clicking opens selection popup -->
       <a class="brand" href="#" id="homeTrigger" aria-label="Open selection">
         <img src="assets/logo.png" alt="Five Two Three logo" />
       </a>
 
       <nav class="tabs" aria-label="Site tabs">
-        <a class="tab" href="#about" style="--tilt:-1.1deg;">About</a>
-        <a class="tab" href="#custom" style="--tilt:1.2deg;">Custom</a>
-        <a class="tab" href="#current" aria-current="page" style="--tilt:-.7deg;">Current Builds</a>
-        <a class="tab" href="GolfCo.html" style="--tilt:1.4deg;">GolfCo</a>
+        <a class="tab" href="#current" aria-current="page">Current Builds</a>
+        <a class="tab" href="GolfCo.html">GolfCo</a>
       </nav>
     </div>
   </header>
@@ -353,22 +333,21 @@
     <div class="overlay__backdrop" data-close="true"></div>
 
     <div class="overlay__panel">
-      <div class="overlay__image" aria-label="Popup artwork from assets/popup.png">
-        <div class="overlay__split">
-          <div style="position:relative;">
-            <a class="overlay__btn" href="#current" id="btnCurrent" style="--tilt:-1.2deg;">
-              Current Builds <span aria-hidden="true">→</span>
-            </a>
-          </div>
+      <div class="overlay__image" aria-label="Popup artwork">
+        <picture>
+          <source srcset="assets/popup-mobile.png" media="(max-width: 680px)">
+          <img src="assets/popup-desktop.png" alt="Site selection artwork">
+        </picture>
 
-          <div style="position:relative;">
-            <a class="overlay__btn" href="GolfCo.html" id="btnGolf" style="--tilt:1.1deg;">
-              Golf Co <span aria-hidden="true">→</span>
-            </a>
-          </div>
-
-          <div class="overlay__divider" aria-hidden="true"></div>
+        <div class="overlay__split" aria-hidden="true">
+          <div class="overlay__side"></div>
+          <div class="overlay__side"></div>
+          <div class="overlay__divider"></div>
         </div>
+
+        <!-- Buttons overlaid (website places these; keep here because they are functional) -->
+        <a class="overlay__btn" href="#current" id="btnCurrent" style="left:25%;">Current Builds →</a>
+        <a class="overlay__btn" href="GolfCo.html" id="btnGolf" style="left:75%;">Golf Co →</a>
       </div>
     </div>
   </div>
@@ -376,59 +355,27 @@
   <main>
     <div class="page" id="current">
       <section class="art" aria-label="Scrollable sequoia artwork">
-        <!-- Put your sequoia image here -->
-        <img src="assets/sequoia.jpg" alt="Giant sequoia illustration" loading="eager" />
-
-        <!-- Cards injected here -->
-        <div id="cardsLayer" aria-hidden="false"></div>
+        <img src="assets/sequoia.png" alt="Giant sequoia illustration" loading="eager" />
+        <div id="cardsLayer"></div>
       </section>
 
-      <section class="bottombar" id="about" style="margin-top:18px;">
-        <div class="bottombar__row">
-          <div style="font-size:20px;">About</div>
-          <div style="color:var(--ink-soft); font-size:15px;">
-            Add your short story here.
-          </div>
-        </div>
-      </section>
-
-      <section class="bottombar" id="custom">
-        <div class="bottombar__row">
-          <div style="font-size:20px;">Custom</div>
-          <div style="color:var(--ink-soft); font-size:15px;">
-            Add custom work details here.
-          </div>
-        </div>
-      </section>
-
-      <!-- Bottom toolbar (no subheadings) + add GolfCo -->
-      <footer class="bottombar" style="margin-top:16px;">
-        <div class="bottombar__row">
-          <div class="navrow" aria-label="Bottom navigation">
-            <a class="btn" href="#about" style="--tilt:-.8deg;">About</a>
-            <a class="btn" href="#custom" style="--tilt:.8deg;">Custom</a>
-            <a class="btn" href="#current" style="--tilt:-.5deg;">Current Builds</a>
-            <a class="btn" href="GolfCo.html" style="--tilt:1.0deg;">GolfCo</a>
-          </div>
+      <!-- Bottom toolbar only -->
+      <footer class="bottombar" aria-label="Bottom toolbar">
+        <div class="navrow">
+          <a class="btn" href="#current">Current Builds</a>
+          <a class="btn" href="GolfCo.html">GolfCo</a>
         </div>
 
-        <div class="bottombar__row">
-          <div class="newsletter">
-            <span><b>Want Luke to pop in your inbox?</b> Join the newsletter. I never spam.</span>
-          </div>
-          <a class="btn"
-             href="mailto:fivetwothreeww@gmail.com?subject=I%20want%20news&body=By%20sending%20this%20email%20you%20agree%20to%20allowing%20Luke%20to%20send%20occasional%20updates."
-             style="--tilt:-.6deg;"
-          >
-            Subscribe
-          </a>
-        </div>
+        <a class="btn"
+           href="mailto:fivetwothreeww@gmail.com?subject=I%20want%20news&body=By%20sending%20this%20email%20you%20agree%20to%20allowing%20Luke%20to%20send%20occasional%20updates.">
+          Subscribe
+        </a>
       </footer>
     </div>
   </main>
 
   <script>
-    /* ========= Popup behavior ========= */
+    /* ========= Overlay behavior ========= */
     (function overlayLogic(){
       const overlay = document.getElementById('homeOverlay');
       const trigger = document.getElementById('homeTrigger');
@@ -444,8 +391,12 @@
         document.body.style.overflow = '';
       }
 
-      // Show on page load
-      window.addEventListener('DOMContentLoaded', openOverlay);
+      // Show on load
+      window.addEventListener('DOMContentLoaded', () => {
+        // ensure page starts at top
+        window.scrollTo(0, 0);
+        openOverlay();
+      });
 
       // Clicking logo opens it again
       trigger.addEventListener('click', (e)=>{ e.preventDefault(); openOverlay(); });
@@ -460,15 +411,22 @@
         if (e.key === 'Escape' && overlay.getAttribute('aria-hidden') === 'false') closeOverlay();
       });
 
-      // If user chooses Current Builds, close overlay after jumping
+      // If user chooses Current Builds, close overlay and jump to top of page content
       const btnCurrent = document.getElementById('btnCurrent');
       if (btnCurrent){
-        btnCurrent.addEventListener('click', ()=>{ setTimeout(closeOverlay, 0); });
+        btnCurrent.addEventListener('click', () => {
+          closeOverlay();
+          // Start at top of the sequoia image area (not mid-scroll)
+          requestAnimationFrame(() => {
+            const target = document.getElementById('current');
+            if (target) target.scrollIntoView({ block: 'start' });
+          });
+        });
       }
     })();
 
     /* ========= currentbuilds.txt -> cards =========
-      Format per product (blocks separated by blank line):
+      Each product block separated by blank line:
       Title
       Small info
       image.png
@@ -479,7 +437,6 @@
       if (!res.ok) throw new Error('Could not load currentbuilds.txt');
       const txt = await res.text();
 
-      // Split blocks by 2+ newlines
       const blocks = txt
         .replace(/\r\n/g, '\n')
         .split(/\n{2,}/)
@@ -497,7 +454,6 @@
     }
 
     function seededRand(seed){
-      // deterministic-ish RNG for stable “organic” placement
       let t = seed >>> 0;
       return function(){
         t += 0x6D2B79F5;
@@ -513,15 +469,9 @@
       const layer = document.getElementById('cardsLayer');
       layer.innerHTML = '';
 
-      // Create nodes
       const cards = items.map((it, idx) => {
         const el = document.createElement('article');
         el.className = 'card';
-
-        // rotation + small jitter
-        const r = seededRand(1000 + idx);
-        const tilt = (r() * 3.2 - 1.6).toFixed(2) + 'deg';
-        el.style.setProperty('--tilt', tilt);
 
         el.innerHTML = `
           <div class="card__title"></div>
@@ -540,7 +490,6 @@
         const a = el.querySelector('a');
         a.href = it.href;
 
-        // whole-card click navigates
         el.addEventListener('click', (e) => {
           if (e.target && e.target.closest('a')) return;
           window.location.href = it.href;
@@ -554,21 +503,21 @@
         const pad = 14;
         const inset = (window.innerWidth < 680) ? 10 : 0;
 
-        // Vertical distribution between these percent bounds
-        const startPct = 18;
-        const endPct = 82;
+        // Ensure cards start near the TOP (user request)
+        const startPct = 8;   // close to top of image
+        const endPct   = 78;  // leave bottom breathing room
         const n = Math.max(1, cards.length);
         const step = (endPct - startPct) / (n + 0.2);
 
         const rand = seededRand(42);
 
         cards.forEach((c, i) => {
-          const topPct = startPct + step * (i + 1) + (rand() * 4 - 2); // small jitter
+          const topPct = startPct + step * (i + 1) + (rand() * 3 - 1.5);
           const y = (topPct / 100) * img.clientHeight;
 
-          // Alternate sides, with slight randomness
           const sideRight = (i % 2 === 1);
-          c.style.top = `${Math.max(62, y)}px`;
+
+          c.style.top = `${Math.max(10, y)}px`;
 
           if (sideRight){
             c.style.left = 'auto';
@@ -590,10 +539,12 @@
         const items = await loadBuilds();
         renderCards(items);
       }catch(err){
-        // Fail silently but log for debugging
         console.warn(err);
       }
     })();
+
+    // Always start at top on refresh
+    window.addEventListener('beforeunload', () => window.scrollTo(0,0));
   </script>
 </body>
 </html>
