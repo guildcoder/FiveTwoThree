@@ -3,399 +3,330 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Five Two Three Woodworking — Current Products</title>
+  <title>Five Two Three Woodworking — Current Builds</title>
 
-  <!-- Optional font. Remove if you want zero external calls. -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Patrick+Hand&display=swap" rel="stylesheet">
 
   <style>
     :root{
-      --paper: #f7f5ef;
-      --ink: #111;
-      --ink-soft: rgba(17,17,17,.72);
-      --frame: rgba(17,17,17,.85);
-      --shadow: rgba(0,0,0,.08);
-      --maxw: 980px;
-      --navh: 64px;
-      --radius: 10px;
+      --paper:#f7f5ef;
+      --ink:#111;
+      --ink-soft:rgba(17,17,17,.72);
+      --frame:rgba(17,17,17,.85);
+      --shadow:rgba(0,0,0,.10);
 
-      --overlay-green: #0f2a1e; /* dark green backdrop */
-      --overlay-cream: #f7f5ef; /* brand cream */
+      --maxw:980px;
+      --navh:64px;
+
+      --overlay-green:#0f2a1e;
+      --overlay-cream:#f7f5ef;
     }
 
-    *{ box-sizing: border-box; }
-    html,body{ height: 100%; }
+    *{ box-sizing:border-box; }
+    html,body{ height:100%; }
     body{
-      margin: 0;
-      background: var(--paper);
-      color: var(--ink);
-      font-family: "Patrick Hand", ui-rounded, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
-      letter-spacing: .2px;
+      margin:0;
+      background:var(--paper);
+      color:var(--ink);
+      font-family:"Patrick Hand", ui-rounded, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+      letter-spacing:.2px;
     }
 
-    /* Top toolbar */
+    /* ===== Header ===== */
     .topbar{
-      position: fixed;
-      top: 0; left: 0; right: 0;
-      height: var(--navh);
-      z-index: 50;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      background: linear-gradient(to bottom, rgba(247,245,239,.92), rgba(247,245,239,.55));
-      backdrop-filter: blur(6px);
-      border-bottom: 1px solid rgba(17,17,17,.12);
+      position:fixed; inset:0 0 auto 0;
+      height:var(--navh);
+      z-index:50;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      background:linear-gradient(to bottom, rgba(247,245,239,.92), rgba(247,245,239,.55));
+      backdrop-filter:blur(6px);
+      border-bottom:1px solid rgba(17,17,17,.12);
     }
     .topbar__inner{
-      width: min(var(--maxw), calc(100% - 24px));
-      display: grid;
-      grid-template-columns: 1fr auto;
-      align-items: center;
-      gap: 14px;
+      width:min(var(--maxw), calc(100% - 24px));
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:14px;
     }
     .brand{
-      display: inline-flex;
-      align-items: center;
-      gap: 10px;
-      min-width: 0;
-      text-decoration: none;
-      color: inherit;
-      cursor: pointer;
+      display:inline-flex;
+      align-items:center;
+      gap:10px;
+      text-decoration:none;
+      color:inherit;
+      cursor:pointer;
+      min-width:0;
     }
-    .logo{
-      width: 34px; height: 34px;
-      border: 2px solid var(--frame);
-      border-radius: 8px;
-      position: relative;
-      background: rgba(255,255,255,.5);
-      box-shadow: 0 6px 18px var(--shadow);
-      flex: 0 0 auto;
-    }
-    .logo:before{
-      content:"523";
-      position:absolute;
-      inset:0;
-      display:grid;
-      place-items:center;
-      font-size: 16px;
-      transform: rotate(-2deg);
-    }
-    .brand__text{
-      display: grid;
-      line-height: 1.05;
-      min-width: 0;
-    }
-    .brand__title{
-      font-size: 18px;
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
-    }
-    .brand__subtitle{
-      font-size: 14px;
-      color: var(--ink-soft);
-      transform: rotate(-.4deg);
+    .brand img{
+      width:38px; height:38px;
+      object-fit:contain;
+      display:block;
     }
 
     .tabs{
-      display: inline-flex;
-      gap: 10px;
-      align-items: center;
-      justify-content: flex-end;
-      flex-wrap: wrap;
+      display:inline-flex;
+      gap:10px;
+      align-items:center;
+      flex-wrap:wrap;
+      justify-content:flex-end;
     }
     .tab{
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      padding: 8px 12px;
-      border: 2px solid var(--frame);
-      border-radius: 9px;
-      text-decoration: none;
-      color: var(--ink);
-      background: rgba(255,255,255,.45);
-      box-shadow: 0 8px 20px var(--shadow);
-      transform: rotate(var(--tilt, -1deg));
-      transition: transform .15s ease, background .15s ease;
-      user-select: none;
-      font-size: 16px;
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      padding:8px 12px;
+      border:2px solid var(--frame);
+      border-radius:10px;
+      text-decoration:none;
+      color:var(--ink);
+      background:rgba(255,255,255,.45);
+      box-shadow:0 8px 20px var(--shadow);
+      transform:rotate(var(--tilt, -1deg));
+      transition:transform .15s ease, background .15s ease;
+      user-select:none;
+      font-size:16px;
+      white-space:nowrap;
     }
-    .tab:hover{ transform: rotate(var(--tilt, -1deg)) translateY(-1px); background: rgba(255,255,255,.65); }
+    .tab:hover{ transform:rotate(var(--tilt, -1deg)) translateY(-1px); background:rgba(255,255,255,.65); }
     .tab[aria-current="page"]{
-      background: rgba(255,255,255,.85);
-      outline: 2px dashed rgba(17,17,17,.25);
-      outline-offset: 3px;
+      background:rgba(255,255,255,.85);
+      outline:2px dashed rgba(17,17,17,.25);
+      outline-offset:3px;
     }
 
+    /* ===== Page ===== */
     main{
-      padding-top: calc(var(--navh) + 16px);
-      padding-bottom: 120px;
-      display: grid;
-      place-items: center;
+      padding-top:calc(var(--navh) + 16px);
+      padding-bottom:120px;
+      display:grid;
+      place-items:center;
     }
     .page{
-      width: min(var(--maxw), calc(100% - 24px));
-      position: relative;
+      width:min(var(--maxw), calc(100% - 24px));
+      position:relative;
     }
 
-    /* Artwork container */
+    /* ===== Sequoia art ===== */
     .art{
-      position: relative;
-      width: 100%;
-      margin: 0 auto;
-      border-radius: 14px;
-      overflow: clip;
-      box-shadow: 0 18px 55px rgba(0,0,0,.10);
-      background: rgba(255,255,255,.45);
-      border: 1px solid rgba(17,17,17,.12);
+      position:relative;
+      width:100%;
+      margin:0 auto;
+      border-radius:14px;
+      overflow:clip;
+      box-shadow:0 18px 55px rgba(0,0,0,.10);
+      background:rgba(255,255,255,.45);
+      border:1px solid rgba(17,17,17,.12);
     }
     .art img{
-      width: 100%;
-      height: auto;
-      display: block;
-      filter: contrast(1.05);
+      width:100%;
+      height:auto;
+      display:block;
+      filter:contrast(1.05);
     }
 
-    /* Project cards on sides */
+    /* ===== Cards (created from currentbuilds.txt) ===== */
     .card{
-      position: absolute;
-      width: min(210px, 38vw);
-      border: 2px solid var(--frame);
-      border-radius: 6px;
-      background: rgba(247,245,239,.92);
-      box-shadow: 0 12px 28px rgba(0,0,0,.10);
-      padding: 10px 10px 8px;
-      transform: rotate(var(--tilt, -1deg));
-      cursor: pointer;
-      transition: transform .15s ease, box-shadow .15s ease;
-      backdrop-filter: blur(2px);
+      position:absolute;
+      width:min(220px, 42vw);
+      border:2px solid var(--frame);
+      border-radius:10px;
+      background:rgba(247,245,239,.94);
+      box-shadow:0 12px 28px rgba(0,0,0,.12);
+      padding:10px;
+      transform:rotate(var(--tilt, -1deg));
+      cursor:pointer;
+      transition:transform .15s ease, box-shadow .15s ease;
+      backdrop-filter:blur(2px);
     }
     .card:hover{
-      transform: rotate(var(--tilt, -1deg)) translateY(-2px);
-      box-shadow: 0 18px 40px rgba(0,0,0,.16);
-    }
-    .card__label{
-      display: inline-block;
-      border: 2px solid var(--frame);
-      padding: 4px 8px;
-      border-radius: 4px;
-      font-size: 14px;
-      line-height: 1;
-      margin-bottom: 8px;
-      background: rgba(255,255,255,.55);
-      transform: rotate(0.6deg);
+      transform:rotate(var(--tilt, -1deg)) translateY(-2px);
+      box-shadow:0 18px 40px rgba(0,0,0,.18);
     }
     .card__title{
-      font-size: 18px;
-      line-height: 1.1;
-      margin: 2px 0 6px;
+      font-size:18px;
+      line-height:1.1;
+      margin:2px 0 4px;
     }
     .card__meta{
-      font-size: 14px;
-      color: var(--ink-soft);
-      line-height: 1.15;
-      margin: 0 0 8px;
+      font-size:14px;
+      color:var(--ink-soft);
+      line-height:1.15;
+      margin:0 0 8px;
+    }
+    .card__img{
+      width:100%;
+      height:96px;
+      border-radius:8px;
+      border:1px solid rgba(17,17,17,.22);
+      background:rgba(255,255,255,.55);
+      object-fit:cover;
+      display:block;
+      margin:0 0 8px;
     }
     .card__cta{
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      text-decoration: none;
-      color: var(--ink);
-      font-size: 15px;
-      border-top: 1px dashed rgba(17,17,17,.25);
-      padding-top: 8px;
-      width: 100%;
-      justify-content: space-between;
+      display:inline-flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:10px;
+      width:100%;
+      text-decoration:none;
+      color:var(--ink);
+      font-size:15px;
+      border-top:1px dashed rgba(17,17,17,.25);
+      padding-top:8px;
     }
 
-    .scrollcue{
-      position: absolute;
-      left: 14px;
-      top: 14px;
-      z-index: 5;
-      display: inline-flex;
-      align-items: center;
-      gap: 10px;
-      padding: 10px 12px;
-      border: 2px solid rgba(17,17,17,.6);
-      border-radius: 12px;
-      background: rgba(247,245,239,.88);
-      box-shadow: 0 12px 30px rgba(0,0,0,.10);
-      transform: rotate(-1deg);
-    }
-    .scrollcue b{ font-weight: 600; }
-    .scrollcue span{ color: var(--ink-soft); }
-
-    /* Bottom area */
+    /* ===== Bottom toolbar ===== */
     .bottombar{
-      margin-top: 16px;
-      border: 2px solid rgba(17,17,17,.55);
-      border-radius: 12px;
-      padding: 14px;
-      background: rgba(255,255,255,.5);
-      box-shadow: 0 14px 40px rgba(0,0,0,.08);
-      display: grid;
-      gap: 10px;
+      margin-top:16px;
+      border:2px solid rgba(17,17,17,.55);
+      border-radius:12px;
+      padding:14px;
+      background:rgba(255,255,255,.5);
+      box-shadow:0 14px 40px rgba(0,0,0,.08);
+      display:grid;
+      gap:12px;
     }
     .bottombar__row{
       display:flex;
       align-items:center;
-      justify-content: space-between;
-      gap: 12px;
-      flex-wrap: wrap;
+      justify-content:space-between;
+      gap:12px;
+      flex-wrap:wrap;
     }
-    .newsletter{
+    .navrow{
       display:flex;
-      align-items:center;
-      gap: 10px;
-      flex-wrap: wrap;
-      color: var(--ink-soft);
-      font-size: 15px;
+      gap:10px;
+      flex-wrap:wrap;
     }
     .btn{
       display:inline-flex;
       align-items:center;
       justify-content:center;
-      padding: 10px 14px;
-      border: 2px solid var(--frame);
-      border-radius: 10px;
+      padding:10px 14px;
+      border:2px solid var(--frame);
+      border-radius:10px;
       text-decoration:none;
-      color: var(--ink);
-      background: rgba(255,255,255,.65);
-      box-shadow: 0 10px 26px rgba(0,0,0,.10);
-      transform: rotate(-.6deg);
+      color:var(--ink);
+      background:rgba(255,255,255,.65);
+      box-shadow:0 10px 26px rgba(0,0,0,.10);
+      transform:rotate(var(--tilt, -.6deg));
+      user-select:none;
+      white-space:nowrap;
     }
-    .btn:hover{ background: rgba(255,255,255,.85); }
+    .btn:hover{ background:rgba(255,255,255,.85); }
 
-    /* ===== Home selection overlay ===== */
-    .overlay{
-      position: fixed;
-      inset: 0;
-      z-index: 200;
-      display: none; /* toggled by JS */
+    .newsletter{
+      display:flex;
+      align-items:center;
+      gap:10px;
+      flex-wrap:wrap;
+      color:var(--ink-soft);
+      font-size:15px;
     }
-    .overlay[aria-hidden="false"]{ display: block; }
+
+    /* ===== Home selection overlay (shows on page load) ===== */
+    .overlay{
+      position:fixed; inset:0;
+      z-index:200;
+      display:none;
+    }
+    .overlay[aria-hidden="false"]{ display:block; }
 
     .overlay__backdrop{
-      position: absolute;
-      inset: 0;
-      background: rgba(15,42,30,.92); /* dark green behind cream popup */
-      backdrop-filter: blur(6px);
+      position:absolute; inset:0;
+      background:rgba(15,42,30,.92);
+      backdrop-filter:blur(6px);
     }
-
     .overlay__panel{
-      position: absolute;
-      left: 50%;
-      top: 50%;
-      transform: translate(-50%, -50%);
-      width: min(980px, calc(100% - 24px));
-      height: min(520px, calc(100% - 140px));
-      border-radius: 22px;
-      border: 2px solid rgba(247,245,239,.35);
-      box-shadow: 0 30px 90px rgba(0,0,0,.35);
-      overflow: clip;
-      background: rgba(247,245,239,.10);
+      position:absolute;
+      left:50%; top:50%;
+      transform:translate(-50%, -50%);
+      width:min(980px, calc(100% - 24px));
+      height:min(560px, calc(100% - 140px));
+      border-radius:22px;
+      border:2px solid rgba(247,245,239,.35);
+      box-shadow:0 30px 90px rgba(0,0,0,.35);
+      overflow:clip;
+      background:rgba(247,245,239,.10);
     }
 
-    /* Rounded-edge image placeholder (design later) */
+    /* Cream space filled by assets/popup.png */
     .overlay__image{
-      position: absolute;
-      inset: 14px;
-      border-radius: 18px;
-      background: var(--overlay-cream);
-      border: 2px solid rgba(17,17,17,.35);
-      box-shadow: inset 0 0 0 1px rgba(255,255,255,.35);
-      overflow: clip;
+      position:absolute;
+      inset:14px;
+      border-radius:18px;
+      border:2px solid rgba(17,17,17,.35);
+      background-color:var(--overlay-cream);
+      background-image:url("assets/popup.png");
+      background-size:cover;
+      background-position:center;
+      background-repeat:no-repeat;
+      overflow:clip;
     }
 
-    /* Split “left/right” options */
+    /* Split hit-areas */
     .overlay__split{
-      position: absolute;
-      inset: 0;
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-    }
-    .overlay__side{
-      position: relative;
-      min-height: 100%;
+      position:absolute; inset:0;
+      display:grid;
+      grid-template-columns:1fr 1fr;
     }
     .overlay__divider{
       position:absolute;
-      top: 10%;
-      bottom: 10%;
-      left: 50%;
-      width: 1px;
-      transform: translateX(-.5px);
-      background: rgba(17,17,17,.18);
-      pointer-events: none;
+      top:10%; bottom:10%;
+      left:50%;
+      width:1px;
+      transform:translateX(-.5px);
+      background:rgba(17,17,17,.18);
+      pointer-events:none;
     }
 
-    /* Buttons near lower center of each side */
+    /* Buttons lower center of each side */
     .overlay__btn{
-      position: absolute;
-      left: 50%;
-      bottom: 22px;
-      transform: translateX(-50%) rotate(var(--tilt, -.7deg));
-      width: min(330px, 80%);
-      padding: 12px 14px;
-      border-radius: 14px;
-      border: 2px solid rgba(17,17,17,.75);
-      background: rgba(255,255,255,.70);
-      color: var(--ink);
-      text-decoration: none;
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      gap: 10px;
-      box-shadow: 0 16px 40px rgba(0,0,0,.18);
-      font-size: 18px;
-      cursor: pointer;
-      user-select: none;
+      position:absolute;
+      left:50%;
+      bottom:22px;
+      transform:translateX(-50%) rotate(var(--tilt, -.7deg));
+      width:min(340px, 82%);
+      padding:12px 14px;
+      border-radius:14px;
+      border:2px solid rgba(17,17,17,.78);
+      background:rgba(255,255,255,.72);
+      color:var(--ink);
+      text-decoration:none;
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      gap:10px;
+      box-shadow:0 16px 40px rgba(0,0,0,.18);
+      font-size:18px;
+      cursor:pointer;
+      user-select:none;
+      text-align:center;
     }
-    .overlay__btn:hover{ background: rgba(255,255,255,.88); }
+    .overlay__btn:hover{ background:rgba(255,255,255,.88); }
 
-    /* Close hint */
-    .overlay__hint{
-      position: absolute;
-      top: 14px;
-      right: 14px;
-      padding: 10px 12px;
-      border-radius: 12px;
-      border: 2px solid rgba(247,245,239,.55);
-      color: rgba(247,245,239,.92);
-      background: rgba(0,0,0,.10);
-      font-size: 14px;
-      user-select: none;
-    }
-
+    /* Mobile tuning */
     @media (max-width: 680px){
-      :root{ --navh: 74px; }
-      .topbar__inner{ grid-template-columns: 1fr; gap: 10px; }
-      .tabs{ justify-content: flex-start; }
-      .card{ width: min(200px, 52vw); }
+      :root{ --navh: 72px; }
+      .topbar__inner{ width:calc(100% - 20px); }
+      .card{ width:min(200px, 64vw); }
+      .card__img{ height:92px; }
 
-      .overlay__panel{
-        height: min(560px, calc(100% - 130px));
-      }
-      .overlay__split{
-        grid-template-columns: 1fr;
-        grid-template-rows: 1fr 1fr;
-      }
+      .overlay__panel{ height:min(620px, calc(100% - 120px)); }
+      .overlay__split{ grid-template-columns:1fr; grid-template-rows:1fr 1fr; }
       .overlay__divider{
-        left: 10%;
-        right: 10%;
-        top: 50%;
-        bottom: auto;
-        height: 1px;
-        width: auto;
-        transform: translateY(-.5px);
+        left:10%; right:10%;
+        top:50%; bottom:auto;
+        height:1px; width:auto;
+        transform:translateY(-.5px);
       }
-      .overlay__btn{
-        width: min(360px, 86%);
-      }
+      .overlay__btn{ width:min(360px, 86%); }
     }
   </style>
 </head>
@@ -403,43 +334,36 @@
 <body>
   <header class="topbar" role="banner">
     <div class="topbar__inner">
-      <!-- Clicking the “home/brand” opens the selection overlay -->
-      <a class="brand" href="#" id="homeTrigger" aria-label="Open home selection">
-        <div class="logo" aria-hidden="true"></div>
-        <div class="brand__text">
-          <div class="brand__title">Five Two Three Woodworking</div>
-          <div class="brand__subtitle">Current Products</div>
-        </div>
+      <!-- Logo only; clicking opens the selection popup -->
+      <a class="brand" href="#" id="homeTrigger" aria-label="Open selection">
+        <img src="assets/logo.png" alt="Five Two Three logo" />
       </a>
 
       <nav class="tabs" aria-label="Site tabs">
-        <a class="tab" href="#about" style="--tilt:-1.3deg;">About</a>
-        <a class="tab" href="#custom" style="--tilt:1.1deg;">Custom</a>
-        <a class="tab" href="#current" aria-current="page" style="--tilt:-.7deg;">Current Products</a>
+        <a class="tab" href="#about" style="--tilt:-1.1deg;">About</a>
+        <a class="tab" href="#custom" style="--tilt:1.2deg;">Custom</a>
+        <a class="tab" href="#current" aria-current="page" style="--tilt:-.7deg;">Current Builds</a>
+        <a class="tab" href="GolfCo.html" style="--tilt:1.4deg;">GolfCo</a>
       </nav>
     </div>
   </header>
 
-  <!-- Home selection overlay (hidden until user clicks Home/Brand) -->
-  <div class="overlay" id="homeOverlay" aria-hidden="true" role="dialog" aria-label="Choose a section">
+  <!-- Selection popup (shows on open) -->
+  <div class="overlay" id="homeOverlay" aria-hidden="true" role="dialog" aria-label="Choose site section">
     <div class="overlay__backdrop" data-close="true"></div>
 
     <div class="overlay__panel">
-      <div class="overlay__hint">Tap outside to close • Esc</div>
-
-      <!-- Rounded edge image placeholder (we will design later). Replace with an <img> when ready. -->
-      <div class="overlay__image" aria-label="Home selection artwork placeholder">
+      <div class="overlay__image" aria-label="Popup artwork from assets/popup.png">
         <div class="overlay__split">
-          <div class="overlay__side">
-            <a class="overlay__btn" href="#current" style="--tilt:-1.2deg;">
-              Woodworking Products <span aria-hidden="true">→</span>
+          <div style="position:relative;">
+            <a class="overlay__btn" href="#current" id="btnCurrent" style="--tilt:-1.2deg;">
+              Current Builds <span aria-hidden="true">→</span>
             </a>
           </div>
 
-          <div class="overlay__side">
-            <!-- Placeholder link: point this at your golf file/page later (e.g., putters.html or /putters/index.html) -->
-            <a class="overlay__btn" href="golf/" style="--tilt:1.1deg;">
-              Putters and Golf Products <span aria-hidden="true">→</span>
+          <div style="position:relative;">
+            <a class="overlay__btn" href="GolfCo.html" id="btnGolf" style="--tilt:1.1deg;">
+              Golf Co <span aria-hidden="true">→</span>
             </a>
           </div>
 
@@ -452,83 +376,49 @@
   <main>
     <div class="page" id="current">
       <section class="art" aria-label="Scrollable sequoia artwork">
-        <div class="scrollcue" aria-hidden="true">
-          <b>Scroll</b> <span>down the sequoia</span>
-        </div>
+        <!-- Put your sequoia image here -->
+        <img src="assets/sequoia.png" alt="Giant sequoia illustration" loading="eager" />
 
-        <!-- Put the JPEG in your repo at: assets/sequoia.jpg (or change this path) -->
-        <img
-          src="assets/sequoia.jpg"
-          alt="Illustration of a giant sequoia with naturalist callouts"
-          loading="eager"
-        />
-
-        <!-- Project cards (adjust data-top & data-side as needed) -->
-        <article class="card" data-top="18" data-side="left" style="--tilt:-1.8deg;" data-href="#project-1">
-          <div class="card__label">CURRENT PRODUCT</div>
-          <div class="card__title">Napkin Holders</div>
-          <p class="card__meta">Maple / Walnut • small batch</p>
-          <a class="card__cta" href="#project-1"><span>Open</span><span>→</span></a>
-        </article>
-
-        <article class="card" data-top="26" data-side="right" style="--tilt:1.4deg;" data-href="#project-2">
-          <div class="card__label">CURRENT PRODUCT</div>
-          <div class="card__title">Coasters</div>
-          <p class="card__meta">Sets • engraved options</p>
-          <a class="card__cta" href="#project-2"><span>Open</span><span>→</span></a>
-        </article>
-
-        <article class="card" data-top="44" data-side="left" style="--tilt:1.0deg;" data-href="#project-3">
-          <div class="card__label">CURRENT PRODUCT</div>
-          <div class="card__title">Wood-burn Art</div>
-          <p class="card__meta">Custom signs • gift pieces</p>
-          <a class="card__cta" href="#project-3"><span>Open</span><span>→</span></a>
-        </article>
-
-        <article class="card" data-top="58" data-side="right" style="--tilt:-1.2deg;" data-href="#project-4">
-          <div class="card__label">CURRENT PRODUCT</div>
-          <div class="card__title">Kids Toys</div>
-          <p class="card__meta">Safe finishes • simple classics</p>
-          <a class="card__cta" href="#project-4"><span>Open</span><span>→</span></a>
-        </article>
-
-        <article class="card" data-top="78" data-side="left" style="--tilt:-.6deg;" data-href="#project-5">
-          <div class="card__label">COMING SOON</div>
-          <div class="card__title">Small Furniture</div>
-          <p class="card__meta">Stools • benches • shelves</p>
-          <a class="card__cta" href="#project-5"><span>Open</span><span>→</span></a>
-        </article>
+        <!-- Cards injected here -->
+        <div id="cardsLayer" aria-hidden="false"></div>
       </section>
 
       <section class="bottombar" id="about" style="margin-top:18px;">
         <div class="bottombar__row">
-          <div>
-            <div style="font-size:20px; margin-bottom:4px;">About</div>
-            <div style="color:var(--ink-soft); font-size:15px;">
-              Add your short story here (shop on the farm, mobile setup, etc.).
-            </div>
+          <div style="font-size:20px;">About</div>
+          <div style="color:var(--ink-soft); font-size:15px;">
+            Add your short story here.
           </div>
         </div>
       </section>
 
       <section class="bottombar" id="custom">
         <div class="bottombar__row">
-          <div>
-            <div style="font-size:20px; margin-bottom:4px;">Custom</div>
-            <div style="color:var(--ink-soft); font-size:15px;">
-              Describe custom work, lead times, woods, and what info you need from a customer.
-            </div>
+          <div style="font-size:20px;">Custom</div>
+          <div style="color:var(--ink-soft); font-size:15px;">
+            Add custom work details here.
           </div>
         </div>
       </section>
 
+      <!-- Bottom toolbar (no subheadings) + add GolfCo -->
       <footer class="bottombar" style="margin-top:16px;">
+        <div class="bottombar__row">
+          <div class="navrow" aria-label="Bottom navigation">
+            <a class="btn" href="#about" style="--tilt:-.8deg;">About</a>
+            <a class="btn" href="#custom" style="--tilt:.8deg;">Custom</a>
+            <a class="btn" href="#current" style="--tilt:-.5deg;">Current Builds</a>
+            <a class="btn" href="GolfCo.html" style="--tilt:1.0deg;">GolfCo</a>
+          </div>
+        </div>
+
         <div class="bottombar__row">
           <div class="newsletter">
             <span><b>Want Luke to pop in your inbox?</b> Join the newsletter. I never spam.</span>
           </div>
           <a class="btn"
              href="mailto:fivetwothreeww@gmail.com?subject=I%20want%20news&body=By%20sending%20this%20email%20you%20agree%20to%20allowing%20Luke%20to%20send%20occasional%20updates."
+             style="--tilt:-.6deg;"
           >
             Subscribe
           </a>
@@ -538,77 +428,171 @@
   </main>
 
   <script>
-    // Position cards into the left/right whitespace relative to image height.
-    (function positionCards(){
+    /* ========= Popup behavior ========= */
+    (function overlayLogic(){
+      const overlay = document.getElementById('homeOverlay');
+      const trigger = document.getElementById('homeTrigger');
+
+      function openOverlay(){
+        overlay.setAttribute('aria-hidden','false');
+        document.documentElement.style.overflow = 'hidden';
+        document.body.style.overflow = 'hidden';
+      }
+      function closeOverlay(){
+        overlay.setAttribute('aria-hidden','true');
+        document.documentElement.style.overflow = '';
+        document.body.style.overflow = '';
+      }
+
+      // Show on page load
+      window.addEventListener('DOMContentLoaded', openOverlay);
+
+      // Clicking logo opens it again
+      trigger.addEventListener('click', (e)=>{ e.preventDefault(); openOverlay(); });
+
+      // Close if clicking the green backdrop
+      overlay.addEventListener('click', (e)=>{
+        if (e.target && e.target.getAttribute('data-close') === 'true') closeOverlay();
+      });
+
+      // Close on Esc
+      window.addEventListener('keydown', (e)=>{
+        if (e.key === 'Escape' && overlay.getAttribute('aria-hidden') === 'false') closeOverlay();
+      });
+
+      // If user chooses Current Builds, close overlay after jumping
+      const btnCurrent = document.getElementById('btnCurrent');
+      if (btnCurrent){
+        btnCurrent.addEventListener('click', ()=>{ setTimeout(closeOverlay, 0); });
+      }
+    })();
+
+    /* ========= currentbuilds.txt -> cards =========
+      Format per product (blocks separated by blank line):
+      Title
+      Small info
+      image.png
+      page.html
+    */
+    async function loadBuilds(){
+      const res = await fetch('currentbuilds.txt', { cache: 'no-store' });
+      if (!res.ok) throw new Error('Could not load currentbuilds.txt');
+      const txt = await res.text();
+
+      // Split blocks by 2+ newlines
+      const blocks = txt
+        .replace(/\r\n/g, '\n')
+        .split(/\n{2,}/)
+        .map(b => b.trim())
+        .filter(Boolean);
+
+      const items = [];
+      for (const b of blocks){
+        const lines = b.split('\n').map(l => l.trim()).filter(Boolean);
+        if (lines.length < 4) continue;
+        const [title, info, imgFile, href] = lines;
+        items.push({ title, info, imgFile, href });
+      }
+      return items;
+    }
+
+    function seededRand(seed){
+      // deterministic-ish RNG for stable “organic” placement
+      let t = seed >>> 0;
+      return function(){
+        t += 0x6D2B79F5;
+        let x = Math.imul(t ^ (t >>> 15), 1 | t);
+        x ^= x + Math.imul(x ^ (x >>> 7), 61 | x);
+        return ((x ^ (x >>> 14)) >>> 0) / 4294967296;
+      };
+    }
+
+    function renderCards(items){
       const art = document.querySelector('.art');
       const img = art.querySelector('img');
-      const cards = Array.from(art.querySelectorAll('.card'));
+      const layer = document.getElementById('cardsLayer');
+      layer.innerHTML = '';
 
-      function apply(){
+      // Create nodes
+      const cards = items.map((it, idx) => {
+        const el = document.createElement('article');
+        el.className = 'card';
+
+        // rotation + small jitter
+        const r = seededRand(1000 + idx);
+        const tilt = (r() * 3.2 - 1.6).toFixed(2) + 'deg';
+        el.style.setProperty('--tilt', tilt);
+
+        el.innerHTML = `
+          <div class="card__title"></div>
+          <div class="card__meta"></div>
+          <img class="card__img" alt="">
+          <a class="card__cta" href="#"><span>Open</span><span aria-hidden="true">→</span></a>
+        `;
+
+        el.querySelector('.card__title').textContent = it.title;
+        el.querySelector('.card__meta').textContent = it.info;
+
+        const im = el.querySelector('img');
+        im.src = `assets/${it.imgFile}`;
+        im.alt = it.title;
+
+        const a = el.querySelector('a');
+        a.href = it.href;
+
+        // whole-card click navigates
+        el.addEventListener('click', (e) => {
+          if (e.target && e.target.closest('a')) return;
+          window.location.href = it.href;
+        });
+
+        layer.appendChild(el);
+        return el;
+      });
+
+      function place(){
         const pad = 14;
+        const inset = (window.innerWidth < 680) ? 10 : 0;
 
-        cards.forEach((c) => {
-          const topPct = Number(c.dataset.top || 10);
-          const side = (c.dataset.side || 'left').toLowerCase();
+        // Vertical distribution between these percent bounds
+        const startPct = 18;
+        const endPct = 82;
+        const n = Math.max(1, cards.length);
+        const step = (endPct - startPct) / (n + 0.2);
 
+        const rand = seededRand(42);
+
+        cards.forEach((c, i) => {
+          const topPct = startPct + step * (i + 1) + (rand() * 4 - 2); // small jitter
           const y = (topPct / 100) * img.clientHeight;
+
+          // Alternate sides, with slight randomness
+          const sideRight = (i % 2 === 1);
           c.style.top = `${Math.max(62, y)}px`;
 
-          const inset = (window.innerWidth < 680) ? 10 : 0;
-          if(side === 'right'){
+          if (sideRight){
             c.style.left = 'auto';
             c.style.right = `${pad + inset}px`;
           } else {
             c.style.right = 'auto';
             c.style.left = `${pad + inset}px`;
           }
-
-          const href = c.getAttribute('data-href');
-          c.onclick = (e) => {
-            if (e.target && e.target.closest('a')) return;
-            if (href) window.location.hash = href;
-          };
         });
       }
 
-      if (img.complete) apply();
-      img.addEventListener('load', apply);
-      window.addEventListener('resize', apply);
-    })();
+      if (img.complete) place();
+      img.addEventListener('load', place, { once: true });
+      window.addEventListener('resize', place);
+    }
 
-    // Home selection overlay logic
-    (function homeOverlay(){
-      const trigger = document.getElementById('homeTrigger');
-      const overlay = document.getElementById('homeOverlay');
-
-      function openOverlay(){
-        overlay.setAttribute('aria-hidden', 'false');
-        // Prevent background scroll while overlay is open
-        document.documentElement.style.overflow = 'hidden';
-        document.body.style.overflow = 'hidden';
+    (async function initCards(){
+      try{
+        const items = await loadBuilds();
+        renderCards(items);
+      }catch(err){
+        // Fail silently but log for debugging
+        console.warn(err);
       }
-
-      function closeOverlay(){
-        overlay.setAttribute('aria-hidden', 'true');
-        document.documentElement.style.overflow = '';
-        document.body.style.overflow = '';
-      }
-
-      trigger.addEventListener('click', (e) => {
-        e.preventDefault();
-        openOverlay();
-      });
-
-      overlay.addEventListener('click', (e) => {
-        const close = e.target && e.target.getAttribute('data-close') === 'true';
-        if (close) closeOverlay();
-      });
-
-      window.addEventListener('keydown', (e) => {
-        if (e.key === 'Escape' && overlay.getAttribute('aria-hidden') === 'false'){
-          closeOverlay();
-        }
-      });
     })();
   </script>
 </body>
