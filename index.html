@@ -1,0 +1,615 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Five Two Three Woodworking — Current Products</title>
+
+  <!-- Optional font. Remove if you want zero external calls. -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Patrick+Hand&display=swap" rel="stylesheet">
+
+  <style>
+    :root{
+      --paper: #f7f5ef;
+      --ink: #111;
+      --ink-soft: rgba(17,17,17,.72);
+      --frame: rgba(17,17,17,.85);
+      --shadow: rgba(0,0,0,.08);
+      --maxw: 980px;
+      --navh: 64px;
+      --radius: 10px;
+
+      --overlay-green: #0f2a1e; /* dark green backdrop */
+      --overlay-cream: #f7f5ef; /* brand cream */
+    }
+
+    *{ box-sizing: border-box; }
+    html,body{ height: 100%; }
+    body{
+      margin: 0;
+      background: var(--paper);
+      color: var(--ink);
+      font-family: "Patrick Hand", ui-rounded, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+      letter-spacing: .2px;
+    }
+
+    /* Top toolbar */
+    .topbar{
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      height: var(--navh);
+      z-index: 50;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: linear-gradient(to bottom, rgba(247,245,239,.92), rgba(247,245,239,.55));
+      backdrop-filter: blur(6px);
+      border-bottom: 1px solid rgba(17,17,17,.12);
+    }
+    .topbar__inner{
+      width: min(var(--maxw), calc(100% - 24px));
+      display: grid;
+      grid-template-columns: 1fr auto;
+      align-items: center;
+      gap: 14px;
+    }
+    .brand{
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      min-width: 0;
+      text-decoration: none;
+      color: inherit;
+      cursor: pointer;
+    }
+    .logo{
+      width: 34px; height: 34px;
+      border: 2px solid var(--frame);
+      border-radius: 8px;
+      position: relative;
+      background: rgba(255,255,255,.5);
+      box-shadow: 0 6px 18px var(--shadow);
+      flex: 0 0 auto;
+    }
+    .logo:before{
+      content:"523";
+      position:absolute;
+      inset:0;
+      display:grid;
+      place-items:center;
+      font-size: 16px;
+      transform: rotate(-2deg);
+    }
+    .brand__text{
+      display: grid;
+      line-height: 1.05;
+      min-width: 0;
+    }
+    .brand__title{
+      font-size: 18px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .brand__subtitle{
+      font-size: 14px;
+      color: var(--ink-soft);
+      transform: rotate(-.4deg);
+    }
+
+    .tabs{
+      display: inline-flex;
+      gap: 10px;
+      align-items: center;
+      justify-content: flex-end;
+      flex-wrap: wrap;
+    }
+    .tab{
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 8px 12px;
+      border: 2px solid var(--frame);
+      border-radius: 9px;
+      text-decoration: none;
+      color: var(--ink);
+      background: rgba(255,255,255,.45);
+      box-shadow: 0 8px 20px var(--shadow);
+      transform: rotate(var(--tilt, -1deg));
+      transition: transform .15s ease, background .15s ease;
+      user-select: none;
+      font-size: 16px;
+    }
+    .tab:hover{ transform: rotate(var(--tilt, -1deg)) translateY(-1px); background: rgba(255,255,255,.65); }
+    .tab[aria-current="page"]{
+      background: rgba(255,255,255,.85);
+      outline: 2px dashed rgba(17,17,17,.25);
+      outline-offset: 3px;
+    }
+
+    main{
+      padding-top: calc(var(--navh) + 16px);
+      padding-bottom: 120px;
+      display: grid;
+      place-items: center;
+    }
+    .page{
+      width: min(var(--maxw), calc(100% - 24px));
+      position: relative;
+    }
+
+    /* Artwork container */
+    .art{
+      position: relative;
+      width: 100%;
+      margin: 0 auto;
+      border-radius: 14px;
+      overflow: clip;
+      box-shadow: 0 18px 55px rgba(0,0,0,.10);
+      background: rgba(255,255,255,.45);
+      border: 1px solid rgba(17,17,17,.12);
+    }
+    .art img{
+      width: 100%;
+      height: auto;
+      display: block;
+      filter: contrast(1.05);
+    }
+
+    /* Project cards on sides */
+    .card{
+      position: absolute;
+      width: min(210px, 38vw);
+      border: 2px solid var(--frame);
+      border-radius: 6px;
+      background: rgba(247,245,239,.92);
+      box-shadow: 0 12px 28px rgba(0,0,0,.10);
+      padding: 10px 10px 8px;
+      transform: rotate(var(--tilt, -1deg));
+      cursor: pointer;
+      transition: transform .15s ease, box-shadow .15s ease;
+      backdrop-filter: blur(2px);
+    }
+    .card:hover{
+      transform: rotate(var(--tilt, -1deg)) translateY(-2px);
+      box-shadow: 0 18px 40px rgba(0,0,0,.16);
+    }
+    .card__label{
+      display: inline-block;
+      border: 2px solid var(--frame);
+      padding: 4px 8px;
+      border-radius: 4px;
+      font-size: 14px;
+      line-height: 1;
+      margin-bottom: 8px;
+      background: rgba(255,255,255,.55);
+      transform: rotate(0.6deg);
+    }
+    .card__title{
+      font-size: 18px;
+      line-height: 1.1;
+      margin: 2px 0 6px;
+    }
+    .card__meta{
+      font-size: 14px;
+      color: var(--ink-soft);
+      line-height: 1.15;
+      margin: 0 0 8px;
+    }
+    .card__cta{
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      text-decoration: none;
+      color: var(--ink);
+      font-size: 15px;
+      border-top: 1px dashed rgba(17,17,17,.25);
+      padding-top: 8px;
+      width: 100%;
+      justify-content: space-between;
+    }
+
+    .scrollcue{
+      position: absolute;
+      left: 14px;
+      top: 14px;
+      z-index: 5;
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 10px 12px;
+      border: 2px solid rgba(17,17,17,.6);
+      border-radius: 12px;
+      background: rgba(247,245,239,.88);
+      box-shadow: 0 12px 30px rgba(0,0,0,.10);
+      transform: rotate(-1deg);
+    }
+    .scrollcue b{ font-weight: 600; }
+    .scrollcue span{ color: var(--ink-soft); }
+
+    /* Bottom area */
+    .bottombar{
+      margin-top: 16px;
+      border: 2px solid rgba(17,17,17,.55);
+      border-radius: 12px;
+      padding: 14px;
+      background: rgba(255,255,255,.5);
+      box-shadow: 0 14px 40px rgba(0,0,0,.08);
+      display: grid;
+      gap: 10px;
+    }
+    .bottombar__row{
+      display:flex;
+      align-items:center;
+      justify-content: space-between;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+    .newsletter{
+      display:flex;
+      align-items:center;
+      gap: 10px;
+      flex-wrap: wrap;
+      color: var(--ink-soft);
+      font-size: 15px;
+    }
+    .btn{
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      padding: 10px 14px;
+      border: 2px solid var(--frame);
+      border-radius: 10px;
+      text-decoration:none;
+      color: var(--ink);
+      background: rgba(255,255,255,.65);
+      box-shadow: 0 10px 26px rgba(0,0,0,.10);
+      transform: rotate(-.6deg);
+    }
+    .btn:hover{ background: rgba(255,255,255,.85); }
+
+    /* ===== Home selection overlay ===== */
+    .overlay{
+      position: fixed;
+      inset: 0;
+      z-index: 200;
+      display: none; /* toggled by JS */
+    }
+    .overlay[aria-hidden="false"]{ display: block; }
+
+    .overlay__backdrop{
+      position: absolute;
+      inset: 0;
+      background: rgba(15,42,30,.92); /* dark green behind cream popup */
+      backdrop-filter: blur(6px);
+    }
+
+    .overlay__panel{
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      transform: translate(-50%, -50%);
+      width: min(980px, calc(100% - 24px));
+      height: min(520px, calc(100% - 140px));
+      border-radius: 22px;
+      border: 2px solid rgba(247,245,239,.35);
+      box-shadow: 0 30px 90px rgba(0,0,0,.35);
+      overflow: clip;
+      background: rgba(247,245,239,.10);
+    }
+
+    /* Rounded-edge image placeholder (design later) */
+    .overlay__image{
+      position: absolute;
+      inset: 14px;
+      border-radius: 18px;
+      background: var(--overlay-cream);
+      border: 2px solid rgba(17,17,17,.35);
+      box-shadow: inset 0 0 0 1px rgba(255,255,255,.35);
+      overflow: clip;
+    }
+
+    /* Split “left/right” options */
+    .overlay__split{
+      position: absolute;
+      inset: 0;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+    }
+    .overlay__side{
+      position: relative;
+      min-height: 100%;
+    }
+    .overlay__divider{
+      position:absolute;
+      top: 10%;
+      bottom: 10%;
+      left: 50%;
+      width: 1px;
+      transform: translateX(-.5px);
+      background: rgba(17,17,17,.18);
+      pointer-events: none;
+    }
+
+    /* Buttons near lower center of each side */
+    .overlay__btn{
+      position: absolute;
+      left: 50%;
+      bottom: 22px;
+      transform: translateX(-50%) rotate(var(--tilt, -.7deg));
+      width: min(330px, 80%);
+      padding: 12px 14px;
+      border-radius: 14px;
+      border: 2px solid rgba(17,17,17,.75);
+      background: rgba(255,255,255,.70);
+      color: var(--ink);
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      box-shadow: 0 16px 40px rgba(0,0,0,.18);
+      font-size: 18px;
+      cursor: pointer;
+      user-select: none;
+    }
+    .overlay__btn:hover{ background: rgba(255,255,255,.88); }
+
+    /* Close hint */
+    .overlay__hint{
+      position: absolute;
+      top: 14px;
+      right: 14px;
+      padding: 10px 12px;
+      border-radius: 12px;
+      border: 2px solid rgba(247,245,239,.55);
+      color: rgba(247,245,239,.92);
+      background: rgba(0,0,0,.10);
+      font-size: 14px;
+      user-select: none;
+    }
+
+    @media (max-width: 680px){
+      :root{ --navh: 74px; }
+      .topbar__inner{ grid-template-columns: 1fr; gap: 10px; }
+      .tabs{ justify-content: flex-start; }
+      .card{ width: min(200px, 52vw); }
+
+      .overlay__panel{
+        height: min(560px, calc(100% - 130px));
+      }
+      .overlay__split{
+        grid-template-columns: 1fr;
+        grid-template-rows: 1fr 1fr;
+      }
+      .overlay__divider{
+        left: 10%;
+        right: 10%;
+        top: 50%;
+        bottom: auto;
+        height: 1px;
+        width: auto;
+        transform: translateY(-.5px);
+      }
+      .overlay__btn{
+        width: min(360px, 86%);
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <header class="topbar" role="banner">
+    <div class="topbar__inner">
+      <!-- Clicking the “home/brand” opens the selection overlay -->
+      <a class="brand" href="#" id="homeTrigger" aria-label="Open home selection">
+        <div class="logo" aria-hidden="true"></div>
+        <div class="brand__text">
+          <div class="brand__title">Five Two Three Woodworking</div>
+          <div class="brand__subtitle">Current Products</div>
+        </div>
+      </a>
+
+      <nav class="tabs" aria-label="Site tabs">
+        <a class="tab" href="#about" style="--tilt:-1.3deg;">About</a>
+        <a class="tab" href="#custom" style="--tilt:1.1deg;">Custom</a>
+        <a class="tab" href="#current" aria-current="page" style="--tilt:-.7deg;">Current Products</a>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Home selection overlay (hidden until user clicks Home/Brand) -->
+  <div class="overlay" id="homeOverlay" aria-hidden="true" role="dialog" aria-label="Choose a section">
+    <div class="overlay__backdrop" data-close="true"></div>
+
+    <div class="overlay__panel">
+      <div class="overlay__hint">Tap outside to close • Esc</div>
+
+      <!-- Rounded edge image placeholder (we will design later). Replace with an <img> when ready. -->
+      <div class="overlay__image" aria-label="Home selection artwork placeholder">
+        <div class="overlay__split">
+          <div class="overlay__side">
+            <a class="overlay__btn" href="#current" style="--tilt:-1.2deg;">
+              Woodworking Products <span aria-hidden="true">→</span>
+            </a>
+          </div>
+
+          <div class="overlay__side">
+            <!-- Placeholder link: point this at your golf file/page later (e.g., putters.html or /putters/index.html) -->
+            <a class="overlay__btn" href="golf/" style="--tilt:1.1deg;">
+              Putters and Golf Products <span aria-hidden="true">→</span>
+            </a>
+          </div>
+
+          <div class="overlay__divider" aria-hidden="true"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <main>
+    <div class="page" id="current">
+      <section class="art" aria-label="Scrollable sequoia artwork">
+        <div class="scrollcue" aria-hidden="true">
+          <b>Scroll</b> <span>down the sequoia</span>
+        </div>
+
+        <!-- Put the JPEG in your repo at: assets/sequoia.jpg (or change this path) -->
+        <img
+          src="assets/sequoia.jpg"
+          alt="Illustration of a giant sequoia with naturalist callouts"
+          loading="eager"
+        />
+
+        <!-- Project cards (adjust data-top & data-side as needed) -->
+        <article class="card" data-top="18" data-side="left" style="--tilt:-1.8deg;" data-href="#project-1">
+          <div class="card__label">CURRENT PRODUCT</div>
+          <div class="card__title">Napkin Holders</div>
+          <p class="card__meta">Maple / Walnut • small batch</p>
+          <a class="card__cta" href="#project-1"><span>Open</span><span>→</span></a>
+        </article>
+
+        <article class="card" data-top="26" data-side="right" style="--tilt:1.4deg;" data-href="#project-2">
+          <div class="card__label">CURRENT PRODUCT</div>
+          <div class="card__title">Coasters</div>
+          <p class="card__meta">Sets • engraved options</p>
+          <a class="card__cta" href="#project-2"><span>Open</span><span>→</span></a>
+        </article>
+
+        <article class="card" data-top="44" data-side="left" style="--tilt:1.0deg;" data-href="#project-3">
+          <div class="card__label">CURRENT PRODUCT</div>
+          <div class="card__title">Wood-burn Art</div>
+          <p class="card__meta">Custom signs • gift pieces</p>
+          <a class="card__cta" href="#project-3"><span>Open</span><span>→</span></a>
+        </article>
+
+        <article class="card" data-top="58" data-side="right" style="--tilt:-1.2deg;" data-href="#project-4">
+          <div class="card__label">CURRENT PRODUCT</div>
+          <div class="card__title">Kids Toys</div>
+          <p class="card__meta">Safe finishes • simple classics</p>
+          <a class="card__cta" href="#project-4"><span>Open</span><span>→</span></a>
+        </article>
+
+        <article class="card" data-top="78" data-side="left" style="--tilt:-.6deg;" data-href="#project-5">
+          <div class="card__label">COMING SOON</div>
+          <div class="card__title">Small Furniture</div>
+          <p class="card__meta">Stools • benches • shelves</p>
+          <a class="card__cta" href="#project-5"><span>Open</span><span>→</span></a>
+        </article>
+      </section>
+
+      <section class="bottombar" id="about" style="margin-top:18px;">
+        <div class="bottombar__row">
+          <div>
+            <div style="font-size:20px; margin-bottom:4px;">About</div>
+            <div style="color:var(--ink-soft); font-size:15px;">
+              Add your short story here (shop on the farm, mobile setup, etc.).
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="bottombar" id="custom">
+        <div class="bottombar__row">
+          <div>
+            <div style="font-size:20px; margin-bottom:4px;">Custom</div>
+            <div style="color:var(--ink-soft); font-size:15px;">
+              Describe custom work, lead times, woods, and what info you need from a customer.
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <footer class="bottombar" style="margin-top:16px;">
+        <div class="bottombar__row">
+          <div class="newsletter">
+            <span><b>Want Luke to pop in your inbox?</b> Join the newsletter. I never spam.</span>
+          </div>
+          <a class="btn"
+             href="mailto:fivetwothreeww@gmail.com?subject=I%20want%20news&body=By%20sending%20this%20email%20you%20agree%20to%20allowing%20Luke%20to%20send%20occasional%20updates."
+          >
+            Subscribe
+          </a>
+        </div>
+      </footer>
+    </div>
+  </main>
+
+  <script>
+    // Position cards into the left/right whitespace relative to image height.
+    (function positionCards(){
+      const art = document.querySelector('.art');
+      const img = art.querySelector('img');
+      const cards = Array.from(art.querySelectorAll('.card'));
+
+      function apply(){
+        const pad = 14;
+
+        cards.forEach((c) => {
+          const topPct = Number(c.dataset.top || 10);
+          const side = (c.dataset.side || 'left').toLowerCase();
+
+          const y = (topPct / 100) * img.clientHeight;
+          c.style.top = `${Math.max(62, y)}px`;
+
+          const inset = (window.innerWidth < 680) ? 10 : 0;
+          if(side === 'right'){
+            c.style.left = 'auto';
+            c.style.right = `${pad + inset}px`;
+          } else {
+            c.style.right = 'auto';
+            c.style.left = `${pad + inset}px`;
+          }
+
+          const href = c.getAttribute('data-href');
+          c.onclick = (e) => {
+            if (e.target && e.target.closest('a')) return;
+            if (href) window.location.hash = href;
+          };
+        });
+      }
+
+      if (img.complete) apply();
+      img.addEventListener('load', apply);
+      window.addEventListener('resize', apply);
+    })();
+
+    // Home selection overlay logic
+    (function homeOverlay(){
+      const trigger = document.getElementById('homeTrigger');
+      const overlay = document.getElementById('homeOverlay');
+
+      function openOverlay(){
+        overlay.setAttribute('aria-hidden', 'false');
+        // Prevent background scroll while overlay is open
+        document.documentElement.style.overflow = 'hidden';
+        document.body.style.overflow = 'hidden';
+      }
+
+      function closeOverlay(){
+        overlay.setAttribute('aria-hidden', 'true');
+        document.documentElement.style.overflow = '';
+        document.body.style.overflow = '';
+      }
+
+      trigger.addEventListener('click', (e) => {
+        e.preventDefault();
+        openOverlay();
+      });
+
+      overlay.addEventListener('click', (e) => {
+        const close = e.target && e.target.getAttribute('data-close') === 'true';
+        if (close) closeOverlay();
+      });
+
+      window.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && overlay.getAttribute('aria-hidden') === 'false'){
+          closeOverlay();
+        }
+      });
+    })();
+  </script>
+</body>
+</html>
